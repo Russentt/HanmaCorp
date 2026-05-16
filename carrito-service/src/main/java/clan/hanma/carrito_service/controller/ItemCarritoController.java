@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import clan.hanma.carrito_service.model.ItemCarrito;
 import clan.hanma.carrito_service.service.ItemCarritoService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/items")
@@ -33,7 +34,7 @@ public class ItemCarritoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody ItemCarrito ic) {
+    public ResponseEntity<?> save(@Valid @RequestBody ItemCarrito ic) {
         return new ResponseEntity<>(itemService.save(ic), HttpStatus.CREATED);
     }
 

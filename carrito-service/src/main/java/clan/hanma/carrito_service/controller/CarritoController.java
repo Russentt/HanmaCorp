@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import clan.hanma.carrito_service.model.Carrito;
 import clan.hanma.carrito_service.service.CarritoService;
-import feign.Response;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/carrito")
@@ -33,7 +33,7 @@ public class CarritoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody Carrito c) {
+    public ResponseEntity<?> save(@Valid @RequestBody Carrito c) {
         return new ResponseEntity<>(carritoService.save(c), HttpStatus.CREATED);
     }
 
