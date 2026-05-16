@@ -20,14 +20,14 @@ create table productos(
     stock bigint not null,
     tienda_id bigint not null,
     categoria_id bigint not null,
-    constraint fk_tienda_id foreign key (tienda_id) references tiendas (id)
+    constraint fk_tienda_id foreign key (tienda_id) references tiendas (id),
     constraint fk_categoria_id foreign key (categoria_id) references categorias (id)
 );
 
 create table vendedores(
     id bigint auto_increment primary key,
     usuario_id bigint unique not null,
-    fecha_registro date not null,
+    fecha_registro datetime not null,
     tienda_id bigint not null,
-    constraint fk_tienda_id foreign key (tienda_id) references tiendas (id)
+    constraint fk_tienda_vendedores_id foreign key (tienda_id) references tiendas (id)
 );

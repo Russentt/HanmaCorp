@@ -52,6 +52,16 @@
             "projectName": "config-server",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-MarketplaceServiceApplication<marketplace-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "clan.hanma.marketplace_service.MarketplaceServiceApplication",
+            "projectName": "marketplace-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }
