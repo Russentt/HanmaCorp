@@ -27,10 +27,10 @@ public class HistorialEstadoOrden {
     private Orden orden;
 
     @ManyToOne
-    @JoinColumn(name = "estado_orden_id")
+    @JoinColumn(name = "estado_anterior_id")
     private EstadoOrden estadoOrdenAnterior;
 
     @ManyToOne
-    @JoinColumn(name = "estado_orden_id")
+    @JoinColumn(name = "estado_actual_id")
     private EstadoOrden estadoOrdenActual;
 }

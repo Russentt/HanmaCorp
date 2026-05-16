@@ -74,6 +74,16 @@
             "projectName": "carrito-service",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-OrdenesServiceApplication<ordenes-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "clan.hanma.ordenes_service.OrdenesServiceApplication",
+            "projectName": "ordenes-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

@@ -1,5 +1,10 @@
 package clan.hanma.carrito_service.repository;
 
-public interface CarritoRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import clan.hanma.carrito_service.model.Carrito;
+
+@Repository
+public interface CarritoRepository extends JpaRepository<Carrito, Long>{
 }

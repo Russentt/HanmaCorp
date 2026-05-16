@@ -36,10 +36,10 @@ public class Orden {
     private int total;
 
     @CreationTimestamp
-    @Column(nullable = false)
+    @Column(nullable = false, name = "fecha_creacion")
     private LocalDateTime fechaCreacion;
 
     @ManyToOne
-    @JoinColumn(name = "estado_orden_id")
+    @JoinColumn(name = "estado_id")
     private EstadoOrden estadoOrden;
 }

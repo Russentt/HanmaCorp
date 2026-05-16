@@ -1,5 +1,6 @@
 package clan.hanma.ordenes_service.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,14 +15,16 @@ public class DetalleOrden {
     private Long id;
 
     @NotNull
+    @Column(name = "producto_id")
     private Long productoId;
 
     @NotNull
     private int cantidad;
 
     @NotNull
+    @Column(name = "precio_unitario")
     private int precioUnitario;
-    
+
     @ManyToOne
     @JoinColumn(name = "orden_id")
     private Orden orden;
