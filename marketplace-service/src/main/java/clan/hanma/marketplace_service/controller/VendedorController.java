@@ -31,6 +31,16 @@ public class VendedorController {
         return ResponseEntity.ok(vendedorService.findById(id));
     }
 
+    @GetMapping("/dto/{id}")
+    public ResponseEntity<?> findByIdDto(@PathVariable Long id) {
+        return ResponseEntity.ok(vendedorService.findByIdDto(id));
+    }
+
+    @GetMapping("/usuario/{id}")
+    public ResponseEntity<?> findByUsuarioId(@PathVariable Long id) {
+        return ResponseEntity.ok(vendedorService.findByUsuarioId(id));
+    }
+
     @PostMapping
     public ResponseEntity<?> save(@RequestBody Vendedor v) {
         return new ResponseEntity<>(vendedorService.save(v), HttpStatus.CREATED);

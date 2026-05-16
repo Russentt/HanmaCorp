@@ -5,6 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import clan.hanma.marketplace_service.clients.IdentidadFeign;
+import clan.hanma.marketplace_service.dto.UsuarioDTO;
+import clan.hanma.marketplace_service.dto.VendedorDTO;
+import clan.hanma.marketplace_service.mapper.VendedorMapper;
 import clan.hanma.marketplace_service.model.Vendedor;
 import clan.hanma.marketplace_service.repository.VendedorRepository;
 
@@ -13,12 +17,29 @@ public class VendedorService {
     @Autowired
     private VendedorRepository vendedorRepository;
 
+    @Autowired
+    private IdentidadFeign feign;
+
+    @Autowired
+    private VendedorMapper mapper;
+
     public List<Vendedor> findAll() {
         return vendedorRepository.findAll();
     }
 
     public Vendedor findById(Long id) {
         return vendedorRepository.findById(id).orElse(null);
+    }
+
+    public VendedorDTO findByIdDto(Long id) {
+        Vendedor v = vendedorRepository.findById(id).orElse(null);
+        UsuarioDTO uDto = feign.findById(v.getUsuarioId());
+        VendedorDTO vDto = mapper.toDTO(v, uDto);
+        return vDto;
+    }
+
+    public Vendedor findByUsuarioId(Long id) {
+        return vendedorRepository.findByUsuarioId(id);
     }
 
     public Vendedor save(Vendedor v) {
@@ -32,9 +53,10 @@ public class VendedorService {
     public Vendedor update(Long id, Vendedor v) {
         Vendedor ven = vendedorRepository.findById(id).orElse(null);
         ven.setTienda(v.getTienda());
-        ven.setFechaRegistro(v.getFechaRegistro());
         vendedorRepository.save(ven);
         return ven;
     }
+
+
 
 }
