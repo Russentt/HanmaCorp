@@ -41,7 +41,8 @@
             "mainClass": "clan.hanma.inventario_service.InventarioServiceApplication",
             "projectName": "inventario-service",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=55250 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=inventario-service"
         },
         {
             "type": "java",
@@ -60,6 +61,17 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "clan.hanma.marketplace_service.MarketplaceServiceApplication",
             "projectName": "marketplace-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=53250 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=marketplace-service"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-CarritoServiceApplication<carrito-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "clan.hanma.carrito_service.CarritoServiceApplication",
+            "projectName": "carrito-service",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }

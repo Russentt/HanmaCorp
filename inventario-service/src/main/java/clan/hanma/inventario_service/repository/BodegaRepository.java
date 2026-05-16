@@ -7,4 +7,5 @@ import clan.hanma.inventario_service.model.Bodega;
 
 @Repository
 public interface BodegaRepository extends JpaRepository<Bodega, Long>{
+    
 }
