@@ -45,19 +45,19 @@ public class ProductoService {
         return pdto;
     }
 
-    public Producto findByCategoriaId(Long id) {
+    public List<Producto> findByCategoriaId(Long id) {
         return productoRepository.findByCategoriaId(id);
     }
 
-    public Producto findByTiendaId(Long id) {
+    public List<Producto> findByTiendaId(Long id) {
         return productoRepository.findByTiendaId(id);
     }
 
-    public Producto findByStock(int stock) {
+    public List<Producto> findByStock(int stock) {
         return productoRepository.findByStock(stock);
     }
 
-    public Producto findByPrice(int min, int max) {
+    public List<Producto> findByPrice(int min, int max) {
         return productoRepository.findByPrice(min, max);
     }
 

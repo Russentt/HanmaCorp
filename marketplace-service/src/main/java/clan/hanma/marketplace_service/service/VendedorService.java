@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import clan.hanma.marketplace_service.clients.IdentidadFeign;
 import clan.hanma.marketplace_service.dto.UsuarioDTO;
-import clan.hanma.marketplace_service.dto.VendedorDTO;
 import clan.hanma.marketplace_service.mapper.VendedorMapper;
 import clan.hanma.marketplace_service.model.Vendedor;
 import clan.hanma.marketplace_service.repository.VendedorRepository;
