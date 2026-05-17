@@ -1,5 +1,6 @@
 package clan.hanma.marketplace_service.service;
 
+import clan.hanma.marketplace_service.repository.CategoriaRepository;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ public class ProductoService {
 
     @Autowired
     private ProductoRepository productoRepository;
+
+    ProductoService(CategoriaRepository categoriaRepository) {
+    }
 
     public List<Producto> findAll() {
         return productoRepository.findAll();
@@ -39,6 +43,22 @@ public class ProductoService {
         pdto.setDescripcion(p.getDescripcion());
         productoRepository.save(pdto);
         return pdto;
+    }
+
+    public Producto findByCategoriaId(Long id) {
+        return productoRepository.findByCategoriaId(id);
+    }
+
+    public Producto findByTiendaId(Long id) {
+        return productoRepository.findByTiendaId(id);
+    }
+
+    public Producto findByStock(int stock) {
+        return productoRepository.findByStock(stock);
+    }
+
+    public Producto findByPrice(int min, int max) {
+        return productoRepository.findByPrice(min, max);
     }
 
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import clan.hanma.marketplace_service.model.Producto;
@@ -47,6 +48,26 @@ public class ProductoController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody Producto p) {
         return ResponseEntity.ok(productoService.update(id, p));
+    }
+
+    @GetMapping("/categoria/{id}")
+    public ResponseEntity<?> findByCategoriaId(@PathVariable Long id) {
+        return ResponseEntity.ok(productoService.findByCategoriaId(id));
+    }
+
+    @GetMapping("/tienda/{id}")
+    public ResponseEntity<?> findByTiendaId(@PathVariable Long id) {
+        return ResponseEntity.ok(productoService.findByTiendaId(id));
+    }
+
+    @GetMapping("/precio")
+    public ResponseEntity<?> findByPrice(@RequestParam int min, @RequestParam int max) {
+        return ResponseEntity.ok(productoService.findByPrice(min, max));
+    }
+
+    @GetMapping("/stock/{stock}")
+    public ResponseEntity<?> findByStock(@PathVariable int stock) {
+        return ResponseEntity.ok(productoService.findByStock(stock));
     }
 
 }
