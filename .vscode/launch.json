@@ -83,6 +83,17 @@
             "mainClass": "clan.hanma.ordenes_service.OrdenesServiceApplication",
             "projectName": "ordenes-service",
             "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=56665 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=ordenes-service"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-PagosServiceApplication<pagos-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "clan.hanma.pagos_service.PagosServiceApplication",
+            "projectName": "pagos-service",
+            "args": "",
             "envFile": "${workspaceFolder}/.env"
         }
     ]

@@ -30,8 +30,11 @@ public class Pago {
     @NotNull
     private int monto;
 
-    @NotBlank
+    @NotBlank(message = "metodoPago no puede estar vacio")
+    @Column(name = "metodo_pago")
     private String metodoPago;
+
+    @Column(name = "fecha_pago")
     private LocalDateTime fechaPago;
 
     @ManyToOne
