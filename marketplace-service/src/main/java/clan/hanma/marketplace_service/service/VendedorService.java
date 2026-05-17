@@ -31,13 +31,6 @@ public class VendedorService {
         return vendedorRepository.findById(id).orElse(null);
     }
 
-    public VendedorDTO findByIdDto(Long id) {
-        Vendedor v = vendedorRepository.findById(id).orElse(null);
-        UsuarioDTO uDto = feign.findById(v.getUsuarioId());
-        VendedorDTO vDto = mapper.toDTO(v, uDto);
-        return vDto;
-    }
-
     public Vendedor findByUsuarioId(Long id) {
         return vendedorRepository.findByUsuarioId(id);
     }
@@ -57,6 +50,9 @@ public class VendedorService {
         return ven;
     }
 
+    public UsuarioDTO existeUsuario(Long id) {
+        return feign.findById(id);
+    }
 
 
 }

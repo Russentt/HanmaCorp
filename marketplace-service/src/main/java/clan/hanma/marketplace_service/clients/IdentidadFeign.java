@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import clan.hanma.marketplace_service.dto.UsuarioDTO;
 
-@FeignClient(name = "identidad-service", url= "http://localhost:8090")
+@FeignClient(name = "identidad-service")
 public interface IdentidadFeign {
 
-    @GetMapping("{/id}")
+    @GetMapping("/usuarios/{id}")
     UsuarioDTO findById(@PathVariable Long id);
 }

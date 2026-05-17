@@ -31,14 +31,11 @@ public class VendedorController {
         return ResponseEntity.ok(vendedorService.findById(id));
     }
 
-    @GetMapping("/dto/{id}")
-    public ResponseEntity<?> findByIdDto(@PathVariable Long id) {
-        return ResponseEntity.ok(vendedorService.findByIdDto(id));
-    }
-
     @GetMapping("/usuario/{id}")
-    public ResponseEntity<?> findByUsuarioId(@PathVariable Long id) {
-        return ResponseEntity.ok(vendedorService.findByUsuarioId(id));
+    public ResponseEntity<?> existeUsuario(@PathVariable Long id) {
+        Vendedor v = vendedorService.findById(id);
+        Long idd = v.getUsuarioId();
+        return ResponseEntity.ok(vendedorService.existeUsuario(idd));
     }
 
     @PostMapping
