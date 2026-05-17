@@ -1,5 +1,8 @@
-package clan.hanma.logistica_service.model;
+package clan.hanma.resenas_service.model;
 
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,25 +12,30 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "comunas")
-public class Comuna {
+@Table(name = "reacciones")
+public class ReaccionResena {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    private String nombre;
+    @Column(name = "usuario_id")
+    private Long usuarioId;
+
+    @NotBlank(message = "Tipo no puede estar vacio")
+    private String tipo;
+
+    @Column(name = "fecha_reaccion")
+    private LocalDateTime fechaReaccion;
 
     @ManyToOne
-    @JoinColumn(name = "region_id")
-    private Region region;
+    @JoinColumn(name = "resena_id")
+    private Resena resena;
 }
