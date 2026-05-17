@@ -32,4 +32,13 @@ public class DetalleOrdenService {
 
     // No se juzga relevante la implementacion del metodo update para la tabla DetalleOrden.
 
+    public DetalleOrden update(Long id, DetalleOrden d) {
+        DetalleOrden detalle = detalleRepository.findById(id).orElse(null);
+        detalle.setCantidad(d.getCantidad());
+        detalle.setOrden(d.getOrden());
+        detalle.setProductoId(d.getProductoId());
+        detalleRepository.save(detalle);
+        return detalle;
+    }
+
 }
