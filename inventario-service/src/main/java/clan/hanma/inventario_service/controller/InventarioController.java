@@ -48,4 +48,14 @@ public class InventarioController {
         return ResponseEntity.ok(inventarioService.update(id, i));
     }
 
+    @GetMapping("/dto/{id}")
+    public ResponseEntity<?> findByIdDTO(@PathVariable Long id) {
+        return ResponseEntity.ok(inventarioService.findByIdDTO(id));
+    }
+
+    @GetMapping("/stock/{stockDisponible}")
+    public ResponseEntity<?> findByStockDisponbile(@PathVariable int stockDisponible) {
+        return ResponseEntity.ok(inventarioService.findByStockDisponible(stockDisponible));
+    }
+
 }

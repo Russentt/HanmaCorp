@@ -5,6 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.netflix.discovery.converters.Auto;
+
+import clan.hanma.inventario_service.clients.MarketplaceFeign;
+import clan.hanma.inventario_service.dto.InventarioDTO;
+import clan.hanma.inventario_service.dto.ProductoDTO;
+import clan.hanma.inventario_service.mapper.InventarioMapper;
 import clan.hanma.inventario_service.model.Inventario;
 import clan.hanma.inventario_service.repository.InventarioRepository;
 
@@ -13,6 +19,12 @@ public class InventarioService {
 
     @Autowired
     private InventarioRepository inventarioRepository;
+
+    @Autowired
+    private InventarioMapper mapper;
+
+    @Autowired
+    private MarketplaceFeign feign;
 
     public List<Inventario> findAll() {
         return inventarioRepository.findAll();
@@ -40,5 +52,16 @@ public class InventarioService {
         inventarioRepository.save(inv);
         return inv;
     }
+
+    public InventarioDTO findByIdDTO(Long id) {
+        Inventario inv = inventarioRepository.findById(id).orElse(null);
+        InventarioDTO iDTO = mapper.toDTO(inv);
+        return iDTO;
+    }
+
+    public List<Inventario> findByStockDisponible(int stockDisponible) {
+        return inventarioRepository.findByStockDisponible(stockDisponible);
+    }
+
 
 }

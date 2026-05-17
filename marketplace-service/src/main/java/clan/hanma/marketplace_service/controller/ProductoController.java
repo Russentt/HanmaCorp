@@ -70,4 +70,14 @@ public class ProductoController {
         return ResponseEntity.ok(productoService.findByStock(stock));
     }
 
+    @GetMapping("/buscar-producto/{id}")
+    public ResponseEntity<?> findStock(@PathVariable Long id) {
+        return ResponseEntity.ok(productoService.findStock(id));
+    }
+
+    @GetMapping("/dto/{id}")
+    public ResponseEntity<?> findByIdDTO(@PathVariable Long id) {
+        return ResponseEntity.ok(productoService.findByIdDto(id));
+    }
+
 }

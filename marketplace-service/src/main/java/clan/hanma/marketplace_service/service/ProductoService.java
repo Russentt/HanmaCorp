@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import clan.hanma.marketplace_service.dto.ProductoDTO;
+import clan.hanma.marketplace_service.mapper.ProductoMapper;
 import clan.hanma.marketplace_service.model.Producto;
 import clan.hanma.marketplace_service.repository.ProductoRepository;
 
@@ -14,6 +16,9 @@ public class ProductoService {
 
     @Autowired
     private ProductoRepository productoRepository;
+
+    @Autowired
+    private ProductoMapper mapper;
 
     ProductoService(CategoriaRepository categoriaRepository) {
     }
@@ -57,8 +62,19 @@ public class ProductoService {
         return productoRepository.findByStock(stock);
     }
 
+    public Long findStock(Long id) {
+        Producto p = productoRepository.findById(id).orElse(null);
+        return p.getStock();
+    }
+
     public List<Producto> findByPrice(int min, int max) {
         return productoRepository.findByPrice(min, max);
+    }
+
+    public ProductoDTO findByIdDto(Long id) {
+        Producto p = productoRepository.findById(id).orElse(null);
+        return mapper.toDTO(p);
+
     }
 
 }
