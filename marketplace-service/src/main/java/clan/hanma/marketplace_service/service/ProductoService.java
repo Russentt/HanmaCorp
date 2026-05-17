@@ -36,7 +36,7 @@ public class ProductoService {
 
     public Producto update(Long id, Producto p) {
         Producto pdto = productoRepository.findById(id).orElse(null);
-        pdto.setCategoria(p.getCategoria().g);
+        pdto.setCategoria(p.getCategoria());
         pdto.setNombre(p.getNombre());
         pdto.setPrecio(p.getPrecio());
         pdto.setStock(p.getStock());

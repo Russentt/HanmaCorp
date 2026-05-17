@@ -54,5 +54,4 @@ public class VendedorService {
         return feign.findById(id);
     }
 
-
 }
