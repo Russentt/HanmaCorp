@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import clan.hanma.ordenes_service.model.Orden;
-import clan.hanma.ordenes_service.repository.OrdenRepository;
 import clan.hanma.ordenes_service.service.OrdenService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/ordenes")
@@ -34,7 +34,7 @@ public class OrdenController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody Orden o) {
+    public ResponseEntity<?> save(@Valid @RequestBody Orden o) {
         return new ResponseEntity<>(ordenService.save(o), HttpStatus.CREATED);
     }
 
