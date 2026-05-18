@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import clan.hanma.pagos_service.model.EstadoPago;
 import clan.hanma.pagos_service.service.EstadoPagoService;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.Path;
 
 @RestController
 @RequestMapping("/estados")

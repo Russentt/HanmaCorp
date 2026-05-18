@@ -1,5 +1,6 @@
 package clan.hanma.identidad_service.service;
 
+import clan.hanma.identidad_service.controller.UsuarioController;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import clan.hanma.identidad_service.dto.UsuarioDTO;
+import clan.hanma.identidad_service.exception.BadRequestException;
+import clan.hanma.identidad_service.exception.ResourceNotFoundException;
 import clan.hanma.identidad_service.mapper.UsuarioMapper;
 import clan.hanma.identidad_service.model.Usuario;
 import clan.hanma.identidad_service.repository.UsuarioRepository;
@@ -21,6 +24,7 @@ public class UsuarioService {
     private UsuarioMapper mapper;
 
     public List<UsuarioDTO> findAll() {
+        if (usuarioRepository.findAll() == null) return null;
         List<Usuario> usuarios = usuarioRepository.findAll();
         List<UsuarioDTO> dtos = new ArrayList<>();
         for (Usuario u: usuarios) {
@@ -30,20 +34,22 @@ public class UsuarioService {
     }
 
     public UsuarioDTO findById(Long id) {
-        Usuario u = usuarioRepository.findById(id).orElse(null);
+        Usuario u = usuarioRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Usuario con id " + id + " no encontrado."));
         return mapper.toDTO(u);
     }
 
     public Usuario save(Usuario u) {
+        if (usuarioRepository.findById(u.getId()) != null) throw new BadRequestException("Ya se encuentra aquel usuario registrado");
         return usuarioRepository.save(u);
     }
 
     public void delete(Long id) {
-        usuarioRepository.deleteById(id);
+        Usuario u = usuarioRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Usuario con id " + id + " no encontrado."));
+        usuarioRepository.deleteById(u.getId());
     }
 
     public Usuario update(Long id, Usuario usuario) {
-        Usuario u = usuarioRepository.findById(id).orElse(null);
+        Usuario u = usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Usuario con id " + id + " no encontrado."));
         u.setNombre(usuario.getNombre());
         u.setApellido(usuario.getApellido());
         u.setEmail(usuario.getEmail());

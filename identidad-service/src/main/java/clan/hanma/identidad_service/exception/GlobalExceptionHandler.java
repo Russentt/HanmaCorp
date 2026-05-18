@@ -20,4 +20,39 @@ public class GlobalExceptionHandler {
     LocalDateTime.now());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+public ResponseEntity<ErrorResponse> manejarNotFound(
+        ResourceNotFoundException ex) {
+
+    ErrorResponse response = new ErrorResponse(
+            "404",
+            "Recurso no encontrado",
+            ex.getMessage(),
+            LocalDateTime.now()
+    );
+
+    return new ResponseEntity<>(
+            response,
+            HttpStatus.NOT_FOUND
+    );
+}
+
+    @ExceptionHandler(BadRequestException.class)
+public ResponseEntity<ErrorResponse> manejarBadRequest(
+        BadRequestException ex) {
+
+    ErrorResponse response = new ErrorResponse(
+            String.valueOf(HttpStatus.BAD_REQUEST.value()),
+            "Solicitud invalida",
+            ex.getMessage(),
+            LocalDateTime.now()
+    );
+
+    return new ResponseEntity<>(
+            response,
+            HttpStatus.BAD_REQUEST
+    );
+}
+
 }
