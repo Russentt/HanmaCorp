@@ -1,32 +1,22 @@
 package clan.hanma.pagos_service.exception;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
-import jakarta.validation.ConstraintViolationException;
 
 public class GlobalExceptionHandler {
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getFieldErrors().forEach(error -> 
-            errors.put(error.getField(), error.getDefaultMessage()));
-        return errors;
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(ConstraintViolationException.class)
-    public Map<String, String> handleConstraintViolation(ConstraintViolationException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getConstraintViolations().forEach(violation -> 
-            errors.put(violation.getPropertyPath().toString(), violation.getMessage()));
-        return errors;
+    public ResponseEntity<?> errorDeValidacion(MethodArgumentNotValidException ex) {
+        List<String> errores = ex.getBindingResult().getFieldErrors().stream().map(error -> error.getDefaultMessage()).toList();
+        ErrorResponse response = new ErrorResponse
+                (String.valueOf(HttpStatus.BAD_REQUEST.value()),
+                        "Validacion fallida",
+                        errores.toString(),
+                        LocalDateTime.now());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
 }
