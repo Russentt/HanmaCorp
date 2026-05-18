@@ -1,6 +1,5 @@
 package clan.hanma.identidad_service.service;
 
-import clan.hanma.identidad_service.controller.UsuarioController;
 import java.util.ArrayList;
 import java.util.List;
 
