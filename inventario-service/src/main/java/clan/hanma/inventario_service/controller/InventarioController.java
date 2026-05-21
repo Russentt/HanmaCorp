@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import clan.hanma.inventario_service.model.Inventario;
@@ -56,6 +57,21 @@ public class InventarioController {
     @GetMapping("/stock/{stockDisponible}")
     public ResponseEntity<?> findByStockDisponbile(@PathVariable int stockDisponible) {
         return ResponseEntity.ok(inventarioService.findByStockDisponible(stockDisponible));
+    }
+
+    @GetMapping("/producto-stock/{id}")
+    public ResponseEntity<?>findStock(@PathVariable Long id) {
+        return ResponseEntity.ok("Del producto " + inventarioService.findByIdDTO(id).getNombre() + " quedan " + inventarioService.findStock(id) + " unidades");
+    }
+
+    @PutMapping("/reservar/{id}")
+    public ResponseEntity<?> reservarStock(@PathVariable Long id, @RequestParam int cantidad) {
+        return ResponseEntity.ok(inventarioService.reservarStock(id, cantidad));
+    }
+
+    @PutMapping("/liberar/{id}")
+    public ResponseEntity<?> liberarStock(@PathVariable Long id, @RequestParam int cantidad) {
+        return ResponseEntity.ok(inventarioService.liberarStock(id, cantidad));
     }
 
 }

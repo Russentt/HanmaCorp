@@ -53,14 +53,24 @@ public class InventarioService {
         return inv;
     }
 
-    public InventarioDTO findByIdDTO(Long id) {
-        Inventario inv = inventarioRepository.findById(id).orElse(null);
-        InventarioDTO iDTO = mapper.toDTO(inv);
-        return iDTO;
+    public ProductoDTO findByIdDTO(Long id) {
+         return feign.findByIdDTO(id);
     }
 
     public List<Inventario> findByStockDisponible(int stockDisponible) {
         return inventarioRepository.findByStockDisponible(stockDisponible);
+    }
+
+    public int findStock(Long id) {
+        return feign.findStock(id);
+    }
+
+    public ProductoDTO reservarStock(Long id, int cantidad) {
+        return feign.reservarStock(id, cantidad);
+    }
+
+    public ProductoDTO liberarStock(Long id, int cantidad) {
+        return feign.liberarStock(id, cantidad);
     }
 
 

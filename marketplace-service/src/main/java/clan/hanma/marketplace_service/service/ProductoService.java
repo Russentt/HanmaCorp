@@ -64,7 +64,8 @@ public class ProductoService {
 
     public Long findStock(Long id) {
         Producto p = productoRepository.findById(id).orElse(null);
-        return p.getStock();
+        ProductoDTO pDto = mapper.toDTO(p);
+        return pDto.getStock();
     }
 
     public List<Producto> findByPrice(int min, int max) {
@@ -74,7 +75,22 @@ public class ProductoService {
     public ProductoDTO findByIdDto(Long id) {
         Producto p = productoRepository.findById(id).orElse(null);
         return mapper.toDTO(p);
+    }
 
+    public ProductoDTO reservarStock(Long id, int cantidad) {
+        Producto p = productoRepository.findById(id).orElse(null);
+        p.setStock((p.getStock() - cantidad));
+        productoRepository.save(p);
+        ProductoDTO pDTO = mapper.toDTO(p);
+        return pDTO;
+    }
+
+    public ProductoDTO liberarStock(Long id, int cantidad) {
+        Producto p = productoRepository.findById(id).orElse(null);
+        p.setStock(p.getStock() + cantidad);
+        productoRepository.save(p);
+        ProductoDTO pDTO = mapper.toDTO(p);
+        return pDTO;
     }
 
 }

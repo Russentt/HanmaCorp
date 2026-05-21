@@ -70,7 +70,7 @@ public class ProductoController {
         return ResponseEntity.ok(productoService.findByStock(stock));
     }
 
-    @GetMapping("/buscar-producto/{id}")
+    @GetMapping("/producto-stock/{id}")
     public ResponseEntity<?> findStock(@PathVariable Long id) {
         return ResponseEntity.ok(productoService.findStock(id));
     }
@@ -79,5 +79,16 @@ public class ProductoController {
     public ResponseEntity<?> findByIdDTO(@PathVariable Long id) {
         return ResponseEntity.ok(productoService.findByIdDto(id));
     }
+
+    @PutMapping("/reservar/{id}")
+    public ResponseEntity<?> reservarStock(@PathVariable Long id, @RequestParam int cantidad) {
+        return ResponseEntity.ok(productoService.reservarStock(id, cantidad));
+    }
+
+    @PutMapping("/liberar/{id}")
+    public ResponseEntity<?> liberarStock(@PathVariable Long id, @RequestParam int cantidad) {
+        return ResponseEntity.ok(productoService.liberarStock(id, cantidad));
+    }
+
 
 }
