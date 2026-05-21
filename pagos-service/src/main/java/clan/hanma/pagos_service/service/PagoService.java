@@ -10,6 +10,7 @@ import clan.hanma.pagos_service.repository.PagoRepository;
 
 @Service
 public class PagoService {
+    
     @Autowired
     private PagoRepository pagoRepository;
 

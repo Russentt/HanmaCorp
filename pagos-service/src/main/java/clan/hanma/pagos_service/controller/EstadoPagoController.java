@@ -17,7 +17,7 @@ import clan.hanma.pagos_service.service.EstadoPagoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/estados")
+@RequestMapping("/estadoPago")
 public class EstadoPagoController {
 
     @Autowired

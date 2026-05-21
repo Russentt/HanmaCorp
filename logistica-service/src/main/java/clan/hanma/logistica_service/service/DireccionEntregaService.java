@@ -2,6 +2,7 @@ package clan.hanma.logistica_service.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import clan.hanma.logistica_service.model.DireccionEntrega;
@@ -9,6 +10,8 @@ import clan.hanma.logistica_service.repository.DireccionEntregaRepository;
 
 @Service
 public class DireccionEntregaService {
+
+    @Autowired
     private DireccionEntregaRepository direccionRepository;
 
     public List<DireccionEntrega> findAll() {

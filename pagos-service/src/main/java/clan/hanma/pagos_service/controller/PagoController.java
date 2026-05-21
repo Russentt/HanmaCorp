@@ -1,5 +1,6 @@
 package clan.hanma.pagos_service.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,8 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/pagos")
 public class PagoController {
+
+    @Autowired
     private PagoService pagoService;
 
     @GetMapping
