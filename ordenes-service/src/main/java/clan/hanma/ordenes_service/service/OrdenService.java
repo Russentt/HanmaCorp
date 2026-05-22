@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import clan.hanma.ordenes_service.clients.CarritoFeign;
+import clan.hanma.ordenes_service.dto.ItemCarritoDTO;
 import clan.hanma.ordenes_service.model.Orden;
 import clan.hanma.ordenes_service.repository.OrdenRepository;
 
@@ -13,6 +15,9 @@ public class OrdenService {
 
     @Autowired
     private OrdenRepository ordenRepository;
+
+    @Autowired
+    private CarritoFeign feign;
 
     public List<Orden> findAll() {
         return ordenRepository.findAll();
@@ -36,6 +41,10 @@ public class OrdenService {
         ord.setTotal(o.getTotal());
         ordenRepository.save(ord);
         return ord;
+    }
+
+    public List<ItemCarritoDTO> obtenerItemsPorUsuario(Long id) {
+        return feign.obtenerItemsPorUsuario(id);
     }
 
 }

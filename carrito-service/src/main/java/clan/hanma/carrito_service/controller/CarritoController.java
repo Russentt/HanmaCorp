@@ -48,4 +48,10 @@ public class CarritoController {
         return ResponseEntity.ok(carritoService.encontrarProductoDTO(id));
     }
 
+    @GetMapping("/items/{id}")
+    public ResponseEntity<?> obtenerItemsPorUsuario(@PathVariable Long id) {
+        return ResponseEntity.ok(carritoService.obtenerItemsPorUsuario(id));
+    }
+    
+
 }

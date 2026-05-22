@@ -49,4 +49,9 @@ public class OrdenController {
         return ResponseEntity.ok(ordenService.update(id, o));
     }
 
+    @GetMapping("/items/{id}")
+    public ResponseEntity<?> obtenerItemsPorUsuario(@PathVariable Long id) {
+        return ResponseEntity.ok(ordenService.obtenerItemsPorUsuario(id));
+    }
+
 }
