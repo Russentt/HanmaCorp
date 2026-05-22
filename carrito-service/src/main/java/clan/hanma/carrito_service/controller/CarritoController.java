@@ -43,4 +43,9 @@ public class CarritoController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/productos/{id}")
+    public ResponseEntity<?> encontrarProductoDTO(@PathVariable Long id) {
+        return ResponseEntity.ok(carritoService.encontrarProductoDTO(id));
+    }
+
 }

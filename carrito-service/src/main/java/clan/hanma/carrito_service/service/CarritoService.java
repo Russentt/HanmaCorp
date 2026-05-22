@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import clan.hanma.carrito_service.clients.MarketplaceFeign;
+import clan.hanma.carrito_service.dto.ProductoDTO;
 import clan.hanma.carrito_service.model.Carrito;
 import clan.hanma.carrito_service.repository.CarritoRepository;
 
@@ -13,6 +15,9 @@ public class CarritoService {
 
     @Autowired
     private CarritoRepository carritoRepository;
+
+    @Autowired
+    private MarketplaceFeign feign;
 
     public List<Carrito> findAll() {
         return carritoRepository.findAll();
@@ -30,5 +35,8 @@ public class CarritoService {
         carritoRepository.deleteById(id);
     }
 
-    //No se implementa metodo update, porque el carrito no posee atributos cuya modificacion resulte relevante.
+    public ProductoDTO encontrarProductoDTO(Long id) {
+        ProductoDTO pDTO = feign.findByIdDTO(id);
+        return pDTO;
+    }
 }
