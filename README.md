@@ -126,15 +126,29 @@ La comunicación entre microservicios se realiza mediante OpenFeign.
 Ejemplos de lógica de negocio implementada:
 
 ```http id="zjksq7"
-GET /productos/activos
-GET /productos/categoria/{categoriaId}
-PUT /inventarios/reservar/{productoId}
-GET /carritos/{id}/total
-PUT /ordenes/{id}/estado
-GET /envios/{id}/seguimiento
+GET /productos/precio
+GET /productos/tienda/{id}
+GET /productos/categoria/{id}
+GET /productos/stock/{id}
+GET /productos/producto-stock/{id}
+GET /carrito/items/{id}
+GET /inventarios/stock/{stockDisponible}
+GET /pago/orden/{id}
 ```
 
 ---
+
+# Endpoints con uso de OpenFeign
+
+```http id="zjksq7"
+GET /vendedores/usuario/{id}
+GET /carrito/productos/{id}
+GET /inventarios/producto-stock/{id}
+PUT /inventarios/reservar/{id}
+PUT /inventarios/liberar/{id}
+GET /ordenes/items/{id}
+GET /ordenes/pago/aprobado/{id}
+```
 
 # Persistencia
 
