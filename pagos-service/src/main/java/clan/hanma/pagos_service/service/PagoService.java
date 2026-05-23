@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import clan.hanma.pagos_service.dto.PagoDTO;
+import clan.hanma.pagos_service.mapper.PagoMapper;
 import clan.hanma.pagos_service.model.Pago;
 import clan.hanma.pagos_service.repository.PagoRepository;
 
@@ -13,6 +15,9 @@ public class PagoService {
     
     @Autowired
     private PagoRepository pagoRepository;
+
+    @Autowired
+    private PagoMapper mapper;
 
     public List<Pago> findAll() {
         return pagoRepository.findAll();
@@ -37,6 +42,11 @@ public class PagoService {
         pag.setEstadoPago(p.getEstadoPago());
         pagoRepository.save(pag);
         return pag;
+    }
+
+    public PagoDTO validarOrdenPagada(Long id) {
+        Pago p = pagoRepository.findByOrden(id);
+        return mapper.toDTO(p);
     }
 
 }

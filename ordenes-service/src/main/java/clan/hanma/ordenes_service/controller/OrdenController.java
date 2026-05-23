@@ -54,4 +54,9 @@ public class OrdenController {
         return ResponseEntity.ok(ordenService.obtenerItemsPorUsuario(id));
     }
 
+    @GetMapping("/pago/aprobado/{id}")
+    public ResponseEntity<?> verOrdenPagada(@PathVariable Long id) {
+        return ResponseEntity.ok(ordenService.verOrdenPagada(id));
+    }
+
 }

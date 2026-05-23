@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import clan.hanma.ordenes_service.clients.CarritoFeign;
+import clan.hanma.ordenes_service.clients.PagoFeign;
 import clan.hanma.ordenes_service.dto.ItemCarritoDTO;
+import clan.hanma.ordenes_service.dto.PagoDTO;
 import clan.hanma.ordenes_service.model.Orden;
 import clan.hanma.ordenes_service.repository.OrdenRepository;
 
@@ -17,7 +19,10 @@ public class OrdenService {
     private OrdenRepository ordenRepository;
 
     @Autowired
-    private CarritoFeign feign;
+    private CarritoFeign carritoFeign;
+
+    @Autowired
+    private PagoFeign pagoFeign;
 
     public List<Orden> findAll() {
         return ordenRepository.findAll();
@@ -44,7 +49,11 @@ public class OrdenService {
     }
 
     public List<ItemCarritoDTO> obtenerItemsPorUsuario(Long id) {
-        return feign.obtenerItemsPorUsuario(id);
+        return carritoFeign.obtenerItemsPorUsuario(id);
+    }
+
+    public PagoDTO verOrdenPagada(Long id) {
+        return pagoFeign.validarOrdenPagada(id);
     }
 
 }

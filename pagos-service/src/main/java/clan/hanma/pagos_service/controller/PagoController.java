@@ -49,4 +49,9 @@ public class PagoController {
         return ResponseEntity.ok(pagoService.update(id, p));
     }
 
+    @GetMapping("/orden/{id}")
+    public ResponseEntity<?> validarOrdenPagada(@PathVariable Long id) {
+        return ResponseEntity.ok(pagoService.validarOrdenPagada(id));
+    }
+
 }
