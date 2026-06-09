@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import clan.hanma.identidad_service.model.Rol;
 import clan.hanma.identidad_service.service.RolService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/roles")
+@Tag(name = "Roles", description = "Controlador para el CRUD completo de Roles")
 public class RolController {
 
     @Autowired

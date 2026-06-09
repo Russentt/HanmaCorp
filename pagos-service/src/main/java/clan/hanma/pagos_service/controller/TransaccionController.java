@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import clan.hanma.pagos_service.model.Transaccion;
 import clan.hanma.pagos_service.service.TransaccionService;
-import feign.Response;
 import jakarta.validation.Valid;
 
 @RestController

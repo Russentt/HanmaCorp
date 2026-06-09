@@ -133,7 +133,7 @@ GET /productos/stock/{id}
 GET /productos/producto-stock/{id}
 GET /carrito/items/{id}
 GET /inventarios/stock/{stockDisponible}
-GET /pago/orden/{id}
+GET /pagos/orden/{id}
 ```
 
 ---
