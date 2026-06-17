@@ -60,10 +60,13 @@ public class UsuarioService {
     }
 
     public Usuario findByEmail(String email) {
-        return usuarioRepository.findByEmail(email);
+        Usuario u = usuarioRepository.findByEmail(email);
+        if (u == null) throw new ResourceNotFoundException("No existe usuario alguno con el e-mail entregado.");
+        return u;
     }
 
     public List<Usuario> findByRol(Long id) {
+        if (usuarioRepository.findByRol(id) == null) throw new ResourceNotFoundException("No existen usuarios con el rol propio al id: " + id);
         return usuarioRepository.findByRol(id);
     }
 
