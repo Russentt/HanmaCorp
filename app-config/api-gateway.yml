@@ -12,11 +12,15 @@ spring:
               uri: lb://identidad-service
               predicates:
                 - Path=/usuarios/**, /roles/**
+              filters:
+                - RewritePath=/usuarios/v3/api-docs, /v3/api-docs
             
             - id: marketplace
               uri: lb://marketplace-service
               predicates:
                 - Path=/vendedores/**, /productos/**, /tiendas/**, /categorias/**
+              filters:
+                - RewritePath=/vendedores/v3/api-docs, /v3/api-docs
             
             - id: inventario
               uri: lb://inventario-service
@@ -60,3 +64,15 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: Identidad
+        url: /usuarios/v3/api-docs
+      - name: Marketplace
+        url: /vendedores/v3/api-docs
+    gateway:
+      discovered-microservices:
+        enabled: true
