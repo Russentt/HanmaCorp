@@ -18,8 +18,8 @@ import io.swagger.v3.oas.annotations.info.Info;
 		version = "1.0.1",
 		description = "Documentacion de API de identidad con todos los endpoints creados",
 		contact = @Contact(
-			name= "Pendiente por ahora",
-			email= "Pendiente por ahora"
+			name= "Ignacio Battistoni Mestre",
+			email= "ig.battistoni@duocuc.cl"
 		)
 	)
 )
