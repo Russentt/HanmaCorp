@@ -26,3 +26,8 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${random.value}
     prefer-ip-address: true
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs

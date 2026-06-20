@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import clan.hanma.inventario_service.model.Bodega;
 import clan.hanma.inventario_service.service.BodegaService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/bodegas")
+@Tag(name = "Bodegas", description = "Controlador de CRUD completo de bodegas")
 public class BodegaController {
 
     @Autowired

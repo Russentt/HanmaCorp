@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import clan.hanma.inventario_service.model.MovimientoStock;
 import clan.hanma.inventario_service.service.MovimientoStockService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/movimientos")
+@Tag(name = "Movimientos de Stock", description = "Controlador de CRUD completo de movimientos de stock")
 public class MovimientoStockController {
 
     @Autowired

@@ -14,39 +14,43 @@ spring:
                 - Path=/usuarios/**, /roles/**
               filters:
                 - RewritePath=/usuarios/v3/api-docs, /v3/api-docs
-            
+
             - id: marketplace
               uri: lb://marketplace-service
               predicates:
                 - Path=/vendedores/**, /productos/**, /tiendas/**, /categorias/**
               filters:
                 - RewritePath=/vendedores/v3/api-docs, /v3/api-docs
-            
+
             - id: inventario
               uri: lb://inventario-service
               predicates:
                 - Path=/bodegas/**, /inventarios/**, /movimientos/**
-            
+              filters:
+                - RewritePath=/bodegas/v3/api-docs, /v3/api-doc
+
             - id: carrito
               uri: lb://carrito-service
               predicates:
                 - Path=/carrito/**, /items/**
-            
+
             - id: ordenes
               uri: lb://ordenes-service
               predicates:
                 - Path=/ordenes/**, /historial/**, /estados/**, /detalle/**
-            
+              filters:
+                - RewritePath=/ordenes/v3/api-docs, /v3/api-docs
+
             - id: pagos
               uri: lb://pagos-service
               predicates:
                 - Path=/pagos/**, /transacciones/**, /estadoPago/**, /reembolsos/**
-            
+
             - id: logistica
               uri: lb://logistica-service
               predicates:
                 - Path=/comunas/**, /direcciones/**, /envios/**, /regiones/**
-            
+
             - id: resenas
               uri: lb://resenas-service
               predicates:
@@ -73,6 +77,10 @@ springdoc:
         url: /usuarios/v3/api-docs
       - name: Marketplace
         url: /vendedores/v3/api-docs
+      - name: Inventario
+        url: /bodegas/v3/api-docs
+      - name: Ordenes
+        url: /ordenes/v3/api-docs
     gateway:
       discovered-microservices:
         enabled: true

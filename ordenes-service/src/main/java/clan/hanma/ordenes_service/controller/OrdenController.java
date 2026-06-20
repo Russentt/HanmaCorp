@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import clan.hanma.ordenes_service.model.Orden;
 import clan.hanma.ordenes_service.service.OrdenService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -60,6 +61,7 @@ public class OrdenController {
         responseCode = "404",
         description = "Orden no encontrada"
     )
+    @Parameter(name = "id", description = "ID de la orden a buscar", required = true)
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         return ResponseEntity.ok(ordenService.findById(id));
@@ -98,6 +100,7 @@ public class OrdenController {
         responseCode = "500",
         description = "Error interno del servidor"
     )
+    @Parameter(name = "id", description = "ID de la orden a eliminar", required = true)
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         ordenService.delete(id);
@@ -120,6 +123,7 @@ public class OrdenController {
         responseCode = "404",
         description = "Orden no encontrada"
     )
+    @Parameter(name = "id", description = "ID de la orden a actualizar", required = true)
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Orden o) {
         return ResponseEntity.ok(ordenService.update(id, o));
@@ -141,6 +145,7 @@ public class OrdenController {
         responseCode = "500",
         description = "Error interno del servidor"
     )
+    @Parameter(name = "id", description = "ID del usuario para obtener sus items de orden", required = true)
     @GetMapping("/items/{id}")
     public ResponseEntity<?> obtenerItemsPorUsuario(@PathVariable Long id) {
         return ResponseEntity.ok(ordenService.obtenerItemsPorUsuario(id));
@@ -162,6 +167,7 @@ public class OrdenController {
         responseCode = "500",
         description = "Error interno del servidor"
     )
+    @Parameter(name = "id", description = "ID de la orden a buscar", required = true)
     @GetMapping("/pago/aprobado/{id}")
     public ResponseEntity<?> verOrdenPagada(@PathVariable Long id) {
         return ResponseEntity.ok(ordenService.verOrdenPagada(id));

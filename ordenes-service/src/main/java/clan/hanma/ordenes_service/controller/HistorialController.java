@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import clan.hanma.ordenes_service.model.HistorialEstadoOrden;
 import clan.hanma.ordenes_service.service.HistorialService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

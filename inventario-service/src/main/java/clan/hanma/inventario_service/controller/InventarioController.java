@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import clan.hanma.inventario_service.model.Inventario;
 import clan.hanma.inventario_service.service.InventarioService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/inventarios")
+@Tag(name = "Inventarios", description = "Controlador de CRUD completo de inventarios")
 public class InventarioController {
 
     @Autowired
