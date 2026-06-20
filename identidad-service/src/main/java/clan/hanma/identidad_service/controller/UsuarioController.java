@@ -27,24 +27,33 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/usuarios")
-@Tag(name = "Usuarios", description = "Controlador para el CRUD completo de Usuarios.")
+@Tag(name = "Usuarios", description = "Controlador para el CRUD completo de usuarios")
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
 
+    @Operation(
+        summary = "Obtener todos los usuarios",
+        description = "Recupera una lista completa de todos los usuarios registrados en el sistema"
+    )
+    @ApiResponse(
+        responseCode = "200",
+        description = "Usuarios recuperados exitosamente",
+        content = @Content(array = @ArraySchema(schema = @Schema(implementation = UsuarioDTO.class)))
+    )
     @GetMapping
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(usuarioService.findAll());
     }
 
     @Operation(
-        summary = "Buscar por ID.",
-        description = "Metodo que busca a un usuario segun su id (Long)"
+        summary = "Buscar usuario por ID",
+        description = "Recupera un usuario especifico por su identificador unico"
     )
     @ApiResponse(
         responseCode = "200",
-        description = "Usuario encontrado",
+        description = "Usuario encontrado exitosamente",
         content = @Content(schema = @Schema(implementation = UsuarioDTO.class))
     )
     @ApiResponse(
@@ -58,17 +67,17 @@ public class UsuarioController {
     }
 
     @Operation(
-        summary = "Crear usuario",
-        description = "Metodo que crea a un usuario y solicita un @RequestBody"
+        summary = "Crear nuevo usuario",
+        description = "Crea un nuevo usuario en el sistema. Requiere un cuerpo de solicitud con la informacion del usuario"
     )
     @ApiResponse(
-        responseCode = "204",
-        description = "Usuario creado con exito",
+        responseCode = "201",
+        description = "Usuario creado exitosamente",
         content = @Content(schema = @Schema(implementation = Usuario.class))
     )
     @ApiResponse(
         responseCode = "400",
-        description = "Error al crear usuario",
+        description = "Datos de usuario invalidos proporcionados",
         content = @Content(schema = @Schema(implementation = BadRequestException.class))
     )
     @PostMapping
@@ -77,12 +86,12 @@ public class UsuarioController {
     }
 
     @Operation(
-        summary = "Eliminar por ID",
-        description = "Metodo que elimina a un usuario segun su ID"
+        summary = "Eliminar usuario por ID",
+        description = "Elimina un usuario del sistema basado en su identificador"
     )
     @ApiResponse(
-        responseCode = "201",
-        description = "Usuario eliminado con exito",
+        responseCode = "204",
+        description = "Usuario eliminado exitosamente",
         content = @Content(schema = @Schema(implementation = Void.class))
     )
     @ApiResponse(
@@ -98,11 +107,11 @@ public class UsuarioController {
 
     @Operation(
         summary = "Actualizar usuario",
-        description = "Metodo que actualiza a un usuario si su ID se ha indicado"
+        description = "Actualiza la informacion de un usuario existente basado en su identificador. Requiere un cuerpo de solicitud con los datos actualizados"
     )
     @ApiResponse(
         responseCode = "200",
-        description = "Usuario actualizado",
+        description = "Usuario actualizado exitosamente",
         content = @Content(schema = @Schema(implementation = Usuario.class))
     )
     @ApiResponse(
@@ -116,12 +125,12 @@ public class UsuarioController {
     }
 
     @Operation(
-        summary = "Encontrar usuario por email",
-        description = "Metodo que encuentra a un usuario segun su email"
+        summary = "Buscar usuario por email",
+        description = "Recupera un usuario por su direccion de correo electronico"
     )
     @ApiResponse(
         responseCode = "200",
-        description = "Usuario encontrado",
+        description = "Usuario encontrado exitosamente",
         content = @Content(schema = @Schema(implementation = Usuario.class))
     )
     @ApiResponse(
@@ -135,12 +144,12 @@ public class UsuarioController {
     }
 
     @Operation(
-        summary = "Encontrar usuarios por rol",
-        description = "Metodo que devuelve una lista de usuarios que compartan rol"
+        summary = "Buscar usuarios por rol",
+        description = "Recupera una lista de todos los usuarios que tienen un rol especifico"
     )
     @ApiResponse(
         responseCode = "200",
-        description = "Rol y usuarios encontrados",
+        description = "Usuarios con el rol especificado encontrados exitosamente",
         content = @Content(array = @ArraySchema(schema = @Schema(implementation = Usuario.class)))
     )
     @ApiResponse(
@@ -154,22 +163,22 @@ public class UsuarioController {
     }
 
     @Operation(
-        summary = "Verificar si e-mail esta registrado",
-        description = "Metodo que comprueba si figura como registrado un e-mail dado"
+        summary = "Verificar si email esta registrado",
+        description = "Verifica si una direccion de correo electronico especifica esta registrada en el sistema"
     )
     @ApiResponse(
         responseCode = "200",
-        description = "Se encuentra el e-mail registrado",
+        description = "Email esta registrado",
         content = @Content(schema = @Schema(implementation = Boolean.class))
     )
     @ApiResponse(
         responseCode = "404",
-        description = "No se encuentra registrado el e-mail",
+        description = "Email no esta registrado",
         content = @Content(schema = @Schema(implementation = ResourceNotFoundException.class))
     )
     @GetMapping("/existe-email/{email}")
     public ResponseEntity<?> emailExists(@PathVariable String email) {
-        if (usuarioService.emailExists(email) != false) return ResponseEntity.ok("Se encuentra registrado el email: " + email);
+        if (usuarioService.emailExists(email) != false) return ResponseEntity.ok("Email registrado: " + email);
         return ResponseEntity.notFound().build();
     }
 

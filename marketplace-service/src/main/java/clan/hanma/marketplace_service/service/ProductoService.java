@@ -20,7 +20,10 @@ public class ProductoService {
     @Autowired
     private ProductoMapper mapper;
 
-    ProductoService(CategoriaRepository categoriaRepository) {
+    public ProductoService() {
+    }
+
+    public ProductoService(CategoriaRepository categoriaRepository) {
     }
 
     public List<Producto> findAll() {
