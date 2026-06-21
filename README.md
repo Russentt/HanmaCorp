@@ -10,9 +10,8 @@ HanmaCorporation es una plataforma de comercio electrónico diseñada bajo una a
 
 Equipo de desarrollo:
 
-- [Nombre Apellido 1]
-- [Nombre Apellido 2]
-- [Nombre Apellido 3]
+- Ignacio Battistoni Mestre.
+- Alexander Mejias.
 
 ---
 
