@@ -1,171 +1,103 @@
-# Marketplace Microservices Platform
+```markdown
+# HanmaCorporation - Arquitectura de Microservicios
 
-Plataforma de marketplace desarrollada mediante arquitectura de microservicios utilizando Spring Boot y Spring Cloud.
+## Contexto
 
-El proyecto fue diseñado con fines académicos para implementar:
-
-* comunicación distribuida,
-* persistencia desacoplada,
-* APIs REST,
-* descubrimiento de servicios,
-* gateway centralizado,
-* integración entre microservicios.
+HanmaCorporation es una plataforma de comercio electrónico diseñada bajo una arquitectura de microservicios robusta, escalable y altamente disponible. El proyecto resuelve la necesidad de segmentar las lógicas de negocio complejas (como gestión de inventario, logística, pagos y usuarios) en módulos independientes. Esto permite un despliegue ágil, un mantenimiento aislado por dominio y una orquestación centralizada utilizando el ecosistema de Spring Cloud y despliegue en contenedores con Docker.
 
 ---
 
-# Arquitectura
+## Créditos
 
-El sistema se compone de los siguientes microservicios:
+Equipo de desarrollo:
 
-| Microservicio      | Responsabilidad                 |
-| ------------------ | ------------------------------- |
-| IdentidadService   | Usuarios y roles                |
-| MarketplaceService | Tiendas, productos y categorías |
-| InventarioService  | Gestión de stock                |
-| CarritoService     | Carritos de compra              |
-| OrdenesService     | Órdenes y estados               |
-| PagosService       | Procesamiento de pagos          |
-| LogisticaService   | Envíos y seguimiento            |
-| ResenasService     | Reseñas y reputación            |
+- Ignacio Battistoni Mestre.
+- Alexander Mejias.
 
 ---
 
-# Tecnologías
+## Arquitectura
 
-* Java 21
-* Spring Boot
-* Spring Cloud
-* Spring Data JPA
-* OpenFeign
-* Eureka Server
-* API Gateway
-* Flyway
-* MySQL
-* Lombok
-* Validation API
+El sistema está compuesto por los siguientes microservicios de infraestructura y de negocio:
 
----
+**Infraestructura:**
 
-# Componentes de Infraestructura
+- **config-server:** Servidor centralizado de configuración (Spring Cloud Config).
+- **eureka-service:** Servidor de descubrimiento y registro de servicios (Netflix Eureka).
+- **api-gateway:** Puerta de enlace unificada y enrutamiento (Spring Cloud Gateway).
+- **mysql-db:** Base de datos relacional central, dividida lógicamente por esquemas.
 
-## Eureka Server
+**Negocio:**
 
-Servicio de descubrimiento para registro dinámico de microservicios.
-
-## API Gateway
-
-Punto único de entrada para centralizar rutas y acceso a APIs.
+- **identidad-service:** Gestión de usuarios, roles y autenticación.
+- **marketplace-service:** Administración de tiendas, vendedores, productos y categorías.
+- **inventario-service:** Control de bodegas, inventarios y movimientos de stock.
+- **carrito-service:** Gestión de carritos de compra y sus ítems.
+- **ordenes-service:** Procesamiento de órdenes de compra, detalles, estados e historial.
+- **pagos-service:** Pasarela interna para pagos, transacciones, estados y reembolsos.
+- **logistica-service:** Administración de regiones, comunas, direcciones de entrega y envíos.
+- **resenas-service:** Sistema de retroalimentación, reseñas y reacciones.
 
 ---
 
-# Comunicación Entre Servicios
+## Networking
 
-La comunicación entre microservicios se realiza mediante OpenFeign.
+El API Gateway centraliza todas las peticiones a través del puerto `8090`. Las rutas principales expuestas son:
 
-## Ejemplos
-
-* CarritoService → MarketplaceService, InventarioService
-* OrdenesService → CarritoService, InventarioService, PagosService
-* ResenasService → MarketplaceService, OrdenesService
-
----
-
-# Modelo General
-
-## IdentidadService
-
-* Usuario
-* Rol
-
-## MarketplaceService
-
-* Vendedor
-* Tienda
-* Producto
-* Categoria
-
-## InventarioService
-
-* Bodega
-* Inventario
-* MovimientoStock
-
-## CarritoService
-
-* Carrito
-* ItemCarrito
-
-## OrdenesService
-
-* Orden
-* DetalleOrden
-* EstadoOrden
-
-## PagosService
-
-* Pago
-* Transaccion
-* Reembolso
-
-## LogisticaService
-
-* Envio
-* EventoSeguimiento
-* DireccionEntrega
-
-## ResenasService
-
-* Resena
-* CalificacionProducto
-* CalificacionVendedor
+- `/usuarios/**`, `/roles/**` → Redirige a **identidad-service**
+- `/vendedores/**`, `/productos/**`, `/tiendas/**`, `/categorias/**` → Redirige a **marketplace-service**
+- `/bodegas/**`, `/inventarios/**`, `/movimientos/**` → Redirige a **inventario-service**
+- `/carrito/**`, `/items/**` → Redirige a **carrito-service**
+- `/ordenes/**`, `/historial/**`, `/estados/**`, `/detalle/**` → Redirige a **ordenes-service**
+- `/pagos/**`, `/transacciones/**`, `/estadoPago/**`, `/reembolsos/**` → Redirige a **pagos-service**
+- `/comunas/**`, `/direcciones/**`, `/envios/**`, `/regiones/**` → Redirige a **logistica-service**
+- `/reacciones/**`, `/resenas/**` → Redirige a **resenas-service**
 
 ---
 
-# Endpoints Personalizados
+## Accesos
 
-Ejemplos de lógica de negocio implementada:
+Una vez que el entorno esté levantado, puedes acceder a los siguientes paneles de control y documentación:
 
-```http id="zjksq7"
-GET /productos/precio
-GET /productos/tienda/{id}
-GET /productos/categoria/{id}
-GET /productos/stock/{id}
-GET /productos/producto-stock/{id}
-GET /carrito/items/{id}
-GET /inventarios/stock/{stockDisponible}
-GET /pagos/orden/{id}
+- **Documentación Swagger UI (Unificada):** http://localhost:8090/swagger-ui.html
+- **Panel de Eureka (Discovery Server):** http://localhost:8761
+- **Verificación de Config Server:** http://localhost:8888/api-gateway/default
+
+---
+
+## Guía de Despliegue
+
+La plataforma está diseñada para ejecutarse tanto en un entorno completamente contenerizado como en un esquema híbrido ideal para el desarrollo local.
+
+### Opción 1: Entorno Contenerizado (Full Docker)
+
+Esta opción levanta toda la infraestructura, la base de datos y todos los microservicios en contenedores. Ideal para pruebas de integración o despliegue en producción.
+
+1. Abre una terminal en el directorio raíz del proyecto.
+2. Ejecuta el comando de construcción y despliegue:
+   `docker-compose up -d --build`
+3. Espera aproximadamente 60 segundos. Los servicios tienen tiempos de espera programados (`sleep`) para garantizar que la base de datos y el servidor de configuración arranquen primero.
+4. Verifica el estado de los contenedores:
+   `docker ps`
+5. Para detener todo el ecosistema:
+   `docker-compose down`
+
+### Opción 2: Entorno Local / Híbrido (Desarrollo en IDE)
+
+Gracias a la configuración dinámica de variables, el proyecto permite trabajar en un esquema híbrido o de forma **completamente local** sin depender de contenedores. Los archivos `.yml` tienen como valor por defecto `localhost`, adaptándose automáticamente a tu entorno de ejecución.
+
+**A. Modelo Completamente Local:**
+Ideal si no deseas usar Docker durante el desarrollo.
+
+1. Asegúrate de tener tu propio gestor MySQL (ej. XAMPP, instalador nativo) corriendo localmente en el puerto `3306` con las bases de datos requeridas creadas.
+2. Desde tu IDE (IntelliJ, Eclipse, VSCode), ejecuta primero los servicios de infraestructura estrictamente en este orden: `config-server`, luego `eureka-service` y por último `api-gateway`.
+3. Dale "Play" a los microservicios de negocio que necesites. Todo el ecosistema se comunicará nativamente a través de tu red local.
+
+**B. Modelo Híbrido (Recomendado para programar ágilmente):**
+Delega lo pesado a Docker y mantén tu código en el IDE.
+
+1. Abre una terminal y levanta solo la infraestructura base en Docker:
+   `docker-compose up -d mysql-db config-server eureka-service api-gateway`
+2. Ve a tu IDE y ejecuta únicamente el microservicio que vas a desarrollar o modificar (ej. `IdentidadServiceApplication.java`).
+3. Tu código local se conectará de forma transparente a las bases de datos y al Eureka alojados en Docker. Prueba tus cambios a través del Gateway (`http://localhost:8090`).
 ```
-
----
-
-# Endpoints con uso de OpenFeign
-
-```http id="zjksq7"
-GET /vendedores/usuario/{id}
-GET /carrito/productos/{id}
-GET /inventarios/producto-stock/{id}
-PUT /inventarios/reservar/{id}
-PUT /inventarios/liberar/{id}
-GET /ordenes/items/{id}
-GET /ordenes/pago/aprobado/{id}
-```
-
-# Persistencia
-
-Cada microservicio posee:
-
-* base de datos independiente,
-* entidades propias,
-* migraciones controladas con Flyway.
-
----
-
-# Objetivo Académico
-
-El proyecto busca demostrar:
-
-* diseño de microservicios,
-* modelado de dominio,
-* persistencia desacoplada,
-* comunicación distribuida,
-* uso del ecosistema Spring Cloud.
