@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import clan.hanma.identidad_service.exception.BadRequestException;
+import clan.hanma.identidad_service.exception.ErrorResponse;
 import clan.hanma.identidad_service.exception.ResourceNotFoundException;
 import clan.hanma.identidad_service.model.Rol;
 import clan.hanma.identidad_service.service.RolService;
@@ -29,6 +30,20 @@ public class RolController {
     @Autowired
     private RolService rolService;
 
+    @Operation(
+        summary = "Encontrar todos los roles",
+        description = "Metodo que devuelve una lista con todos los roles"
+    )
+    @ApiResponse(
+        responseCode = "200",
+        description = "Roles encontrados con exito",
+        content = @Content(schema = @Schema(implementation = Rol.class))
+    )
+    @ApiResponse(
+        responseCode = "404",
+        description = "No se encontraron roles",
+        content = @Content(schema = @Schema(implementation = ResourceNotFoundException.class))
+    )
     @GetMapping
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(rolService.findAll());

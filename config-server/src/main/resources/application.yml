@@ -8,6 +8,6 @@ spring:
       server:
         native:
           search-locations: file:../app-config
-
+          add-label-locations: false
 server:
   port: 8888

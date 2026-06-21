@@ -5,5 +5,4 @@ create database bd_inventario;
 create database bd_pagos;
 create database bd_ordenes;
 create database bd_resenas;
-create database bd_logistica;
 create database bd_carrito;

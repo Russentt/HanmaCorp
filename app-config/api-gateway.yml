@@ -1,3 +1,7 @@
+server:
+  port: ${SERVER_PORT:8090}
+  address: 0.0.0.0
+
 spring:
   application:
     name: api-gateway
@@ -69,18 +73,15 @@ spring:
               predicates:
                 - Path=/reacciones/**, /resenas/**
 
-server:
-  port: 8090
-  address: 0.0.0.0
-
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
   instance:
     prefer-ip-address: true
+    instance-id: ${spring.application.name}:${random.value}
 
 springdoc:
   swagger-ui:
