@@ -32,7 +32,7 @@ public class BodegaController {
 
     @Operation(
         summary = "Obtener todas las bodegas",
-        description = "Obtiene una lista de todas las bodegas registradas en el sistema",
+        description = "Obtiene una lista de todas las bodegas registradas en el sistema"
     )
     @ApiResponse(
         responseCode = "200",
@@ -99,7 +99,7 @@ public class BodegaController {
         responseCode = "404",
         description = "No se ha encontrado la bodega a eliminar"
     )
-     @ApiResponse(
+    @ApiResponse(
         responseCode = "500",
         description = "Error interno del servidor"
     )
@@ -126,7 +126,7 @@ public class BodegaController {
         responseCode = "404",
         description = "No se ha encontrado la bodega a actualizar"
     )
-     @ApiResponse(
+    @ApiResponse(
         responseCode = "500",
         description = "Error interno del servidor"
     )

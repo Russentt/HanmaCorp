@@ -1,89 +1,155 @@
 package clan.hanma.marketplace_service;
 
-import static org.mockito.Mockito.when;
-
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import clan.hanma.marketplace_service.controller.TiendaController;
 import clan.hanma.marketplace_service.model.Tienda;
 import clan.hanma.marketplace_service.service.TiendaService;
-import org.springframework.http.MediaType;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(TiendaController.class)
-@DisplayName("Tienda Controller Test")
+@DisplayName("Pruebas en el controlador de Tiendas")
 public class TiendaControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+	@Autowired
+	private MockMvc mockMvc;
 
-    @Autowired
-    private TiendaService tiendaService;
+	@MockitoBean
+	private TiendaService tiendaService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+	@Autowired
+	private ObjectMapper objectMapper;
 
-    private Tienda tiendaMock;
+	private Tienda tiendaMock;
+	private Tienda tiendaMock2;
 
-    void setup() {
-        tiendaMock = new Tienda();
-        tiendaMock.setId(1L);
-        tiendaMock.setNombre("Tienda 1");
-        tiendaMock.setDescripcion("Descripción de la Tienda 1");
-    }
+	@BeforeEach
+	void setup() {
+		tiendaMock = new Tienda();
+		tiendaMock.setId(1L);
+		tiendaMock.setNombre("TecnoStore");
+		tiendaMock.setDescripcion("Tienda de tecnologia");
+		tiendaMock.setReputacion(4.5);
+		tiendaMock.setActiva(true);
 
-    @Test
-    @DisplayName("findAll() -> Debe retornar una lista completa de tiendas")
-    void testFindAll() throws Exception{
-        // Implementar prueba para el método findAll() del TiendaController
-        when(tiendaService.findAll()).thenReturn(List.of(tiendaMock));
-        mockMvc.perform(MockMvcRequestBuilders.get("/tiendas").contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(tiendaMock.getId()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].nombre").value(tiendaMock.getNombre()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].descripcion").value(tiendaMock.getDescripcion()))
-                .andDo(print());
-    }
+		tiendaMock2 = new Tienda();
+		tiendaMock2.setId(2L);
+		tiendaMock2.setNombre("CasaMarket");
+		tiendaMock2.setDescripcion("Tienda para el hogar");
+		tiendaMock2.setReputacion(4.1);
+		tiendaMock2.setActiva(true);
+	}
 
-    @Test
-    @DisplayName("findById() -> Debe retornar una tienda por su ID")
-    void testFindById() throws Exception {
-        // Implementar prueba para el método findById() del TiendaController
-        when(tiendaService.findById(1L)).thenReturn(tiendaMock);
-        mockMvc.perform(MockMvcRequestBuilders.get("/tiendas/1").contentType(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(tiendaMock.getId()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.nombre").value(tiendaMock.getNombre()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.descripcion").value(tiendaMock.getDescripcion()))
-                .andDo(print());
-    }
+	@Test
+	@DisplayName("findAll() -> Debe retornar listado completo de tiendas")
+	void testFindAll() throws Exception {
+		when(tiendaService.findAll()).thenReturn(List.of(tiendaMock, tiendaMock2));
 
-    @Test
-    @DisplayName("save() -> Debe guardar una nueva tienda")
-    void testSave() throws Exception {
-        // Implementar prueba para el método save() del TiendaController
-        when(tiendaService.save(tiendaMock)).thenReturn(tiendaMock);
-        String tiendaJson = objectMapper.writeValueAsString(tiendaMock);
-        mockMvc.perform(MockMvcRequestBuilders.post("/tiendas").contentType(MediaType.APPLICATION_JSON).content(tiendaJson))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(tiendaMock.getId()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.nombre").value(tiendaMock.getNombre()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.descripcion").value(tiendaMock.getDescripcion()))
-                .andDo(print());
-    }
-    @Test
-    @DisplayName("delete() -> Debe eliminar una tienda por su ID")
-    void testDelete() throws Exception {
-        // Implementar prueba para el método delete() del TiendaController
-        mockMvc.perform(MockMvcRequestBuilders.delete("/tiendas/1").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(print());
-    }
+		mockMvc.perform(get("/tiendas"))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$", hasSize(2)))
+				.andExpect(jsonPath("$[0].id").value(1))
+				.andExpect(jsonPath("$[0].nombre").value("TecnoStore"))
+				.andExpect(jsonPath("$[1].id").value(2))
+				.andExpect(jsonPath("$[1].nombre").value("CasaMarket"));
+
+		verify(tiendaService, times(1)).findAll();
+	}
+
+	@Test
+	@DisplayName("findById() -> Debe retornar tienda encontrada por ID")
+	void testFindById() throws Exception {
+		when(tiendaService.findById(1L)).thenReturn(tiendaMock);
+
+		mockMvc.perform(get("/tiendas/1"))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.id").value(1))
+				.andExpect(jsonPath("$.nombre").value("TecnoStore"))
+				.andExpect(jsonPath("$.descripcion").value("Tienda de tecnologia"));
+
+		verify(tiendaService, times(1)).findById(1L);
+	}
+
+	@Test
+	@DisplayName("save() -> Debe registrar nueva tienda")
+	void testSave() throws Exception {
+		when(tiendaService.save(any(Tienda.class))).thenReturn(tiendaMock);
+
+		String tiendaJson = objectMapper.writeValueAsString(tiendaMock);
+
+		mockMvc.perform(post("/tiendas")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(tiendaJson))
+				.andExpect(status().isCreated())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.id").value(1))
+				.andExpect(jsonPath("$.nombre").value("TecnoStore"));
+
+		verify(tiendaService, times(1)).save(any(Tienda.class));
+	}
+
+	@Test
+	@DisplayName("delete() -> Debe eliminar tienda por ID")
+	void testDelete() throws Exception {
+		doNothing().when(tiendaService).delete(anyLong());
+
+		mockMvc.perform(delete("/tiendas/1"))
+				.andExpect(status().isNoContent());
+
+		verify(tiendaService, times(1)).delete(1L);
+	}
+
+	@Test
+	@DisplayName("update() -> Debe actualizar tienda existente")
+	void testUpdate() throws Exception {
+		Tienda tiendaActualizada = new Tienda();
+		tiendaActualizada.setId(1L);
+		tiendaActualizada.setNombre("TecnoStore Pro");
+		tiendaActualizada.setDescripcion("Tienda de tecnologia premium");
+		tiendaActualizada.setReputacion(4.8);
+		tiendaActualizada.setActiva(true);
+
+		when(tiendaService.update(anyLong(), any(Tienda.class))).thenReturn(tiendaActualizada);
+
+		String tiendaJson = objectMapper.writeValueAsString(tiendaActualizada);
+
+		mockMvc.perform(put("/tiendas/1")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(tiendaJson))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.id").value(1))
+				.andExpect(jsonPath("$.nombre").value("TecnoStore Pro"))
+				.andExpect(jsonPath("$.reputacion").value(4.8));
+
+		verify(tiendaService, times(1)).update(anyLong(), any(Tienda.class));
+	}
+
 }

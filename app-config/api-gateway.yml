@@ -5,6 +5,19 @@ spring:
     web-application-type: reactive
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          "[/**]":
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+        default-filters:
+          - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
       server:
         webflux:
           routes:
@@ -27,7 +40,7 @@ spring:
               predicates:
                 - Path=/bodegas/**, /inventarios/**, /movimientos/**
               filters:
-                - RewritePath=/bodegas/v3/api-docs, /v3/api-doc
+                - RewritePath=/inventarios/v3/api-docs, /v3/api-docs
 
             - id: carrito
               uri: lb://carrito-service
@@ -78,9 +91,12 @@ springdoc:
       - name: Marketplace
         url: /vendedores/v3/api-docs
       - name: Inventario
-        url: /bodegas/v3/api-docs
+        url: /inventarios/v3/api-docs
       - name: Ordenes
         url: /ordenes/v3/api-docs
     gateway:
       discovered-microservices:
         enabled: true
+api-docs:
+  version: openapi_3_0
+show-actuator: true

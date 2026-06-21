@@ -63,6 +63,7 @@ public class HistorialController {
         responseCode = "500",
         description = "Error interno del servidor"
     )
+    @Parameter(name = "id", description = "ID del historial de estado de orden a buscar", required = true)
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         return ResponseEntity.ok(historialService.findById(id));
@@ -101,6 +102,7 @@ public class HistorialController {
         responseCode = "500",
         description = "Error interno del servidor"
     )
+    @Parameter(name = "id", description = "ID del historial de estado de orden a eliminar", required = true)
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         historialService.delete(id);
@@ -123,6 +125,7 @@ public class HistorialController {
         responseCode = "404",
         description = "Historial de estado de orden no encontrado"
     )
+    @Parameter(name = "id", description = "ID del historial de estado de orden a actualizar", required = true)
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody HistorialEstadoOrden hist) {
         return ResponseEntity.ok(historialService.save(hist));
